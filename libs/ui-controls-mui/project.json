@@ -1,0 +1,9 @@
+{
+  "name": "ui-controls-mui",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/ui-controls-mui/src",
+  "projectType": "library",
+  "tags": ["type:ui:controls-mui", "scope:shared"],
+  "// targets": "to see all targets run: nx show project ui-controls-mui --web",
+  "targets": {}
+}

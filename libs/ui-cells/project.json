@@ -1,0 +1,9 @@
+{
+  "name": "ui-cells",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/ui-cells/src",
+  "projectType": "library",
+  "tags": ["type:ui:cells", "scope:shared"],
+  "// targets": "to see all targets run: nx show project ui-cells --web",
+  "targets": {}
+}
