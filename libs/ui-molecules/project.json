@@ -1,0 +1,9 @@
+{
+  "name": "ui-molecules",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/ui-molecules/src",
+  "projectType": "library",
+  "tags": ["type:ui:molecules", "scope:shared"],
+  "// targets": "to see all targets run: nx show project ui-molecules --web",
+  "targets": {}
+}
