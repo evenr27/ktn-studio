@@ -2,31 +2,29 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
+      "@ktn/core-form": ["libs/core-form/src/index.ts"],
       "@ktn/core/*": ["libs/core/src/*"],
+      "@ktn/hooks/*": ["libs/hooks/src/*"],
+      "@ktn/theme/*": ["libs/theme/src/*"],
+      "@ktn/ui-atoms/*": ["libs/ui-atoms/src/*"],
+      "@ktn/ui-cells/*": ["libs/ui-cells/src/*"],
       "@ktn/ui-controls-core/*": ["libs/ui-controls-core/src/*"],
       "@ktn/ui-controls-mui/*": ["libs/ui-controls-mui/src/*"],
-      "@ktn/ui-atoms/*": ["libs/ui-atoms/src/*"],
-      "@ktn/ui-molecules/*": ["libs/ui-molecules/src/*"],
-      "@ktn/ui-cells/*": ["libs/ui-cells/src/*"],
       "@ktn/ui-features/*": ["libs/ui-features/src/*"],
-      "@ktn/theme/*": ["libs/theme/src/*"],
-      "@ktn/hooks/*": ["libs/hooks/src/*"]
+      "@ktn/ui-molecules/*": ["libs/ui-molecules/src/*"]
     },
-
     "strict": true,
     "noImplicitReturns": true,
     "noImplicitOverride": true,
     "noUnusedLocals": true,
     "noFallthroughCasesInSwitch": true,
     "skipLibCheck": true,
-
     "target": "es2022",
     "module": "esnext",
     "moduleResolution": "bundler",
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "isolatedModules": true,
     "importHelpers": true,
-
     "customConditions": ["@ktn-studio/source"]
   }
 }
