@@ -1,0 +1,9 @@
+{
+  "name": "hooks-form",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/hooks-form/src",
+  "projectType": "library",
+  "tags": ["type:hooks", "domain:form", "scope:shared"],
+  "// targets": "to see all targets run: nx show project hooks-form --web",
+  "targets": {}
+}
