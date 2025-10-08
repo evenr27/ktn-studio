@@ -1,7 +1,7 @@
-import { hooks } from './hooks';
+import { hooks } from './hooks'
 
 describe('hooks', () => {
   it('should work', () => {
-    expect(hooks()).toEqual('hooks');
-  });
-});
+    expect(hooks()).toEqual('hooks')
+  })
+})

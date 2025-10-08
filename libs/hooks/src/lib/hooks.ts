@@ -1,3 +1,3 @@
 export function hooks(): string {
-  return 'hooks';
+  return 'hooks'
 }
