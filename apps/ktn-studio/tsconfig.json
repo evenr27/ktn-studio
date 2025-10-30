@@ -1,11 +1,13 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
+    "baseUrl": "../../",
     "jsx": "preserve",
     "noEmit": true,
     "emitDeclarationOnly": false,
     "esModuleInterop": true,
     "resolveJsonModule": true,
+    "moduleResolution": "bundler",
     "lib": [
       "dom",
       "dom.iterable",
@@ -22,15 +24,25 @@
     ],
     "paths": {
       "@/*": [
-        "./src/*"
-      ]
+        "apps/ktn-studio/src/*"
+      ],
+      "@ktn/core-form/*": ["libs/core-form/src/*"],
+      "@ktn/core/*": ["libs/core/src/*"],
+      "@ktn/hooks-form/*": ["libs/hooks-form/src/*"],
+      "@ktn/hooks/*": ["libs/hooks/src/*"],
+      "@ktn/theme/*": ["libs/theme/src/*"],
+      "@ktn/ui-atoms/*": ["libs/ui-atoms/src/*"],
+      "@ktn/ui-cells/*": ["libs/ui-cells/src/*"],
+      "@ktn/ui-controls-core/*": ["libs/ui-controls-core/src/*"],
+      "@ktn/ui-controls-mui/*": ["libs/ui-controls-mui/src/*"],
+      "@ktn/ui-features/*": ["libs/ui-features/src/*"],
+      "@ktn/ui-molecules/*": ["libs/ui-molecules/src/*"]
     },
     "types": [
       "jest",
       "node"
     ],
     "outDir": "dist",
-    "rootDir": "src",
     "tsBuildInfoFile": "dist/tsconfig.tsbuildinfo"
   },
   "include": [

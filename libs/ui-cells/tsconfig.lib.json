@@ -35,5 +35,9 @@
     "eslint.config.cjs",
     "eslint.config.mjs"
   ],
-  "references": []
+  "references": [
+    {
+      "path": "../ui-molecules/tsconfig.lib.json"
+    }
+  ]
 }

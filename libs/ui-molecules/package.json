@@ -12,6 +12,12 @@
       "types": "./dist/index.esm.d.ts",
       "import": "./dist/index.esm.js",
       "default": "./dist/index.esm.js"
+    },
+    "./ide": {
+      "@ktn-studio/source": "./src/ide/index.ts",
+      "types": "./dist/index.esm.d.ts",
+      "import": "./dist/index.esm.js",
+      "default": "./dist/index.esm.js"
     }
   }
 }

@@ -12,7 +12,10 @@
       "@ktn/ui-controls-core/*": ["libs/ui-controls-core/src/*"],
       "@ktn/ui-controls-mui/*": ["libs/ui-controls-mui/src/*"],
       "@ktn/ui-features/*": ["libs/ui-features/src/*"],
-      "@ktn/ui-molecules/*": ["libs/ui-molecules/src/*"]
+      "@ktn/ui-features/ide-shell": ["libs/ui-features/src/ide-shell/index.ts"],
+      "@ktn/ui-molecules/*": ["libs/ui-molecules/src/*"],
+      "@ktn/ui-molecules/ide": ["libs/ui-molecules/src/ide/index.ts"],
+      "@ktn/ui-cells": ["libs/ui-cells/src/index.ts"]
     },
     "strict": true,
     "noImplicitReturns": true,

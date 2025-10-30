@@ -18,6 +18,7 @@ node_modules
 *.sublime-workspace
 
 # IDE - VSCode
+.vscode
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
@@ -50,5 +51,8 @@ out
 
 test-output
 
-#Documents
-docs
+#IA CONTEXT
+.context
+
+# Snyk Security Extension - AI Rules (auto-generated)
+.github/instructions/snyk_rules.instructions.md
