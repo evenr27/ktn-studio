@@ -1,34 +1,53 @@
 {
+  "compileOnSave": false,
   "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2020", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@ktn/core-form/*": ["libs/core-form/src/*"],
-      "@ktn/core/*": ["libs/core/src/*"],
-      "@ktn/hooks-form/*": ["libs/hooks-form/src/*"],
-      "@ktn/hooks/*": ["libs/hooks/src/*"],
-      "@ktn/theme/*": ["libs/theme/src/*"],
-      "@ktn/ui-atoms/*": ["libs/ui-atoms/src/*"],
-      "@ktn/ui-cells/*": ["libs/ui-cells/src/*"],
-      "@ktn/ui-controls-core/*": ["libs/ui-controls-core/src/*"],
-      "@ktn/ui-controls-mui/*": ["libs/ui-controls-mui/src/*"],
-      "@ktn/ui-features/*": ["libs/ui-features/src/*"],
-      "@ktn/ui-features/ide-shell": ["libs/ui-features/src/ide-shell/index.ts"],
-      "@ktn/ui-molecules/*": ["libs/ui-molecules/src/*"],
-      "@ktn/ui-molecules/ide": ["libs/ui-molecules/src/ide/index.ts"],
-      "@ktn/ui-cells": ["libs/ui-cells/src/index.ts"]
-    },
-    "strict": true,
-    "noImplicitReturns": true,
-    "noImplicitOverride": true,
-    "noUnusedLocals": true,
-    "noFallthroughCasesInSwitch": true,
-    "skipLibCheck": true,
-    "target": "es2022",
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "lib": ["ES2022", "DOM", "DOM.Iterable"],
-    "isolatedModules": true,
-    "importHelpers": true,
-    "customConditions": ["@ktn-studio/source"]
-  }
+      "@ktn/core-form": ["libs/core-form/index.ts"],
+      "@ktn/core-form/*": ["libs/core-form/*"],
+
+      "@ktn/core": ["libs/core/index.ts"],
+      "@ktn/core/*": ["libs/core/*"],
+
+      "@ktn/hooks-form": ["libs/hooks-form/index.ts"],
+      "@ktn/hooks-form/*": ["libs/hooks-form/*"],
+
+      "@ktn/hooks": ["libs/hooks/index.ts"],
+      "@ktn/hooks/*": ["libs/hooks/*"],
+
+      "@ktn/theme": ["libs/theme/index.ts"],
+      "@ktn/theme/*": ["libs/theme/*"],
+
+      "@ktn/ui-atoms": ["libs/ui-atoms/index.ts"],
+      "@ktn/ui-atoms/*": ["libs/ui-atoms/*"],
+
+      "@ktn/ui-cells": ["libs/ui-cells/index.ts"],
+      "@ktn/ui-cells/*": ["libs/ui-cells/*"],
+
+      "@ktn/ui-controls-core": ["libs/ui-controls-core/index.ts"],
+      "@ktn/ui-controls-core/*": ["libs/ui-controls-core/*"],
+
+      "@ktn/ui-controls-mui": ["libs/ui-controls-mui/index.ts"],
+      "@ktn/ui-controls-mui/*": ["libs/ui-controls-mui/*"],
+
+      "@ktn/ui-features": ["libs/ui-features/index.ts"],
+      "@ktn/ui-features/*": ["libs/ui-features/*"],
+
+      "@ktn/ui-molecules": ["libs/ui-molecules/index.ts"],
+      "@ktn/ui-molecules/*": ["libs/ui-molecules/*"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
 }
