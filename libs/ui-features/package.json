@@ -12,6 +12,15 @@
       "types": "./dist/index.esm.d.ts",
       "import": "./dist/index.esm.js",
       "default": "./dist/index.esm.js"
+    },
+    "./ide-shell": {
+      "@ktn-studio/source": "./src/ide-shell/index.ts",
+      "types": "./dist/ide-shell/index.d.ts",
+      "import": "./dist/ide-shell/index.js",
+      "default": "./dist/ide-shell/index.js"
     }
+  },
+  "dependencies": {
+    "@ktn/ui-cells": "*"
   }
 }
