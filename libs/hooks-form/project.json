@@ -1,0 +1,15 @@
+{
+  "name": "hooks-form",
+  "projectType": "library",
+  "sourceRoot": "libs/hooks-form",
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/hooks-form"],
+      "options": {
+        "jestConfig": "libs/hooks-form/jest.config.ts",
+        "passWithNoTests": false
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "core-form",
+  "projectType": "library",
+  "sourceRoot": "libs/core-form",
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/core-form"],
+      "options": {
+        "jestConfig": "libs/core-form/jest.config.ts",
+        "passWithNoTests": false
+      }
+    }
+  }
+}

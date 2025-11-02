@@ -11,7 +11,9 @@
     "lint:fix": "nx run-many --targets=lint --all --fix=true",
     "test": "nx run-many --all --target=test --passWithNoTests",
     "test:watch": "nx run-many --all --target=test --watch",
-    "prepare": "husky"
+    "prepare": "husky",
+    "read:context": "ts-node tools/read-context.js",
+    "tree:project": "node tools/print-tree.js"
   },
   "private": true,
   "dependencies": {

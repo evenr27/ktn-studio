@@ -1,4 +1,4 @@
-import { GitLikeStore } from '@ktn/core/stores'
+import { GitLikeStore } from '@ktn-store'
 import { FormState, FormFieldState } from '../../state/form-state'
 
 const DEFAULT_FIELD_STATE: Omit<FormFieldState, 'id'> = {

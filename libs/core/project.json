@@ -1,0 +1,15 @@
+{
+  "name": "core",
+  "projectType": "library",
+  "sourceRoot": "libs/core",
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/core"],
+      "options": {
+        "jestConfig": "libs/core/jest.config.ts",
+        "passWithNoTests": false
+      }
+    }
+  }
+}

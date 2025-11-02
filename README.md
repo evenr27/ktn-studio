@@ -1,82 +1,190 @@
-# KtnStudio
+# Katana Studio (KTN)
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+Visual IDE and form builder with a **Git-like state management system**, datasets, and AI integration.
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is almost ready ✨.
+---
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/nx-api/next?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+## 🧠 Overview
 
-## Finish your CI setup
+Katana Studio (KTN) is a **visual IDE and form builder** built using Nx, Next.js, and a modular architecture.
+The project includes a Git-like store (`ktn-store`), intelligent form field factories, dataset adapters, and an evolving AI-assisted builder.
 
-[Click here to finish setting up your workspace!](https://cloud.nx.app/connect/4EqzepvDXj)
+---
 
+## 🧩 Tech Stack
 
-## Run tasks
+- **Framework:** Nx + Next.js (App Router)
+- **Language:** TypeScript
+- **UI Library:** MUI 7 (Tailwind + shadcn/ui planned for later KTN frontends)
+- **State (core):** ktn-store (custom git-like store)
+- **Database:** MongoDB + PostgreSQL (Dockerized)
+- **Testing:** Jest + React Testing Library
+- **Validation:** Zod 4
+- **Data Fetching:** TanStack Query 5
+- **Containerization:** Docker + Docker Compose
+- **CI/CD:** GitHub Actions (planned)
 
-To run the dev server for your app, use:
+---
 
-```sh
-npx nx dev ktn-studio
+## 📁 Project Structure
+
+```text
+.ia_context/           ← Project context and documentation for AI + developers
+apps/                  ← Applications (frontend and IDE shell)
+libs/                  ← Core, UI, and logic libraries
+tools/                 ← Custom development scripts
+docker/                ← Environment and service definitions
 ```
 
-To create a production bundle:
+---
 
-```sh
-npx nx build ktn-studio
+## 📘 Documentation
+
+### For Developers
+
+- [`OVERVIEW`](.ia_context/_OVERVIEW.md) – Complete project overview
+- [`DECISIONS`](.ia_context/_CONTEXT/decisions.md) – Architectural decisions
+- [`ROADMAP`](.ia_context/_CONTEXT/roadmap.md) – Development phases
+- [`ENV_SETUP`](.ia_context/_CONTEXT/env-setup.md) – Environment setup guide
+
+### Technical Reference
+
+- [**Git-Like Pattern**](.ia_context/_TECH_REFERENCE/architecture/git-like-pattern.md)
+- [**Form Field Architecture**](.ia_context/_TECH_REFERENCE/architecture/form-field-architecture.md)
+- [**Hooks System**](.ia_context/_TECH_REFERENCE/architecture/hooks-system.md)
+
+### Factory Source Code
+
+- [.ia_context/\_TECH_REFERENCE/factories/createGitLikeZustandStore.factory.txt](.ia_context/_TECH_REFERENCE/factories/createGitLikeZustandStore.factory.txt)
+- [.ia_context/\_TECH_REFERENCE/factories/createGitLikeHookAdapter.factory.txt](.ia_context/_TECH_REFERENCE/factories/createGitLikeHookAdapter.factory.txt)
+- [.ia_context/\_TECH_REFERENCE/factories/createGitLikeHookSelector.factory.txt](.ia_context/_TECH_REFERENCE/factories/createGitLikeHookSelector.factory.txt)
+- [.ia_context/\_TECH_REFERENCE/factories/CreateFormField.factory.txt](.ia_context/_TECH_REFERENCE/factories/CreateFormField.factory.txt)
+
+---
+
+## ⚙️ Key Features
+
+✅ **Git-like Store Factories**: custom state management (Zustand-like) with stash/commit pattern  
+✅ **Intelligent Form Fields**: reactive validation and auto-commit logic  
+✅ **Datasets System**: declarative data sources (static, remote, derived)  
+✅ **Dataset Registry**: cache, transform, and bind field data dynamically  
+✅ **AI Integration (planned)**: agent-assisted form creation & rules setup  
+✅ **Multi-storage Persistence**: session/local storage and MongoDB linkage
+
+---
+
+## 🧠 Git-Like Store API
+
+Each form or component can manage its state as a Git-like repo with two layers:
+
+```ts
+stash(...)       // Update working copy
+commit(...)      // Promote stash to commit
+discard()        // Revert stash to last commit
+resetStash()     // Reset only the stash
+resetAll()       // Reset both stash and commit to the same value
 ```
 
-To see all available targets to run for a project, run:
+### Example
 
-```sh
-npx nx show project ktn-studio
+```ts
+import { createKtnGitLikeStore } from '@ktn-store'
+
+export const profileStore = createKtnGitLikeStore({
+  storageKey: 'profile',
+  initialData: {
+    firstName: '',
+    lastName: '',
+  },
+  persistence: 'local',
+})
+
+profileStore.stash({ firstName: 'Edwin' })
+profileStore.commit()
+
+console.log(profileStore.getCommit())
+// → { firstName: 'Edwin', lastName: '' }
 ```
 
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
+---
 
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+## ⚛️ React Adapter
 
-## Add new projects
+The adapter bridges the GitLikeStore to React hooks.
 
-While you could add new projects to your workspace manually, you might want to leverage [Nx plugins](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) and their [code generation](https://nx.dev/features/generate-code?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) feature.
+```ts
+import { createKtnGitLikeHook } from '@ktn-store'
+import { profileStore } from './profile-store'
 
-Use the plugin's generator to create new projects.
+export const useProfileStore = createKtnGitLikeHook(profileStore._store)
 
-To generate a new application, use:
-
-```sh
-npx nx g @nx/next:app demo
+function ProfileName() {
+  const firstName = useProfileStore((s) => s.stashData.firstName)
+  return <span>{firstName}</span>
+}
 ```
 
-To generate a new library, use:
+---
 
-```sh
-npx nx g @nx/react:lib mylib
+## 🧠 AI Context Files
+
+All contextual information for developers and AI agents lives under `.ia_context/`:
+
+```
+.ia_context/
+  _OVERVIEW.md
+  _CONTEXT/
+  _TECH_REFERENCE/
+  manifest.json
+  project-structure.txt
+  prompts.txt
 ```
 
-You can use `npx nx list` to get a list of installed plugins. Then, run `npx nx list <plugin-name>` to learn about more specific capabilities of a particular plugin. Alternatively, [install Nx Console](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) to browse plugins and generators in your IDE.
+> NOTE: `.claude/` may contain local Claude settings, but `.ia_context/` is the **official context source**.
 
-[Learn more about Nx plugins &raquo;](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) | [Browse the plugin registry &raquo;](https://nx.dev/plugin-registry?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+---
 
+## 🧰 Tools
 
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+| Tool                    | Description                                   |
+| ----------------------- | --------------------------------------------- |
+| `tools/print-tree.js`   | Generates `.ia_context/project-structure.txt` |
+| `tools/read-context.js` | Reads and merges context files (for AI usage) |
 
-## Install Nx Console
+Run:
 
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
+```bash
+pnpm tree:project
+pnpm context:read
+```
 
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+---
 
-## Useful links
+## 🧱 Dockerized Databases
 
-Learn more:
+```
+docker/
+  mongo/
+  postgres/
+```
 
-- [Learn more about this workspace setup](https://nx.dev/nx-api/next?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+> Each service includes initialization scripts, environment variables, and persistent volumes.
 
-And join the Nx community:
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+---
+
+## 🔮 Future Plans
+
+- AI-assisted node editor for form logic (rules, visibility, validation)
+- Visual dataset linking with dependency graphs
+- Integration with Postmark/SES for transactional emails
+- Publishing system for reusable components and forms
+
+---
+
+## 🧑‍💻 License
+
+This repository and its submodules are licensed under the terms defined in **LICENSE** and **NON-COMMERCIAL.md**.
+
+---
+
+_Designed and developed as part of the KTN ecosystem._

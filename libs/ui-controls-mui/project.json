@@ -1,0 +1,15 @@
+{
+  "name": "ui-controls-mui",
+  "projectType": "library",
+  "sourceRoot": "libs/ui-controls-mui",
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/ui-controls-mui"],
+      "options": {
+        "jestConfig": "libs/ui-controls-mui/jest.config.ts",
+        "passWithNoTests": false
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "ui-features",
+  "projectType": "library",
+  "sourceRoot": "libs/ui-features",
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/ui-features"],
+      "options": {
+        "jestConfig": "libs/ui-features/jest.config.ts",
+        "passWithNoTests": false
+      }
+    }
+  }
+}

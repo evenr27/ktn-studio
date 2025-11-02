@@ -1,0 +1,38 @@
+Claude, please load and remember the project context for **Katana Studio**.
+
+The context is located in the `.ia_context/` folder at the root of the repository.
+It contains all the architecture notes, factories, and design decisions.
+
+Please read and index all files under:
+- `.ia_context/_OVERVIEW.md`
+- `.ia_context/_TECH_REFERENCE/**/*`
+- `.ia_context/_CONTEXT/**/*`
+- `.ia_context/manifest.json`
+- `.ia_context/manifest.schema.json`
+
+When done, confirm that you’ve loaded the full context and summarize the key concepts you’ve understood.
+
+After loading, you should always use this context when answering any question or generating code for Katana Studio.
+This includes:
+- understanding the git-like state pattern (stash/commit),
+- how hooks, adapters, and stores are structured,
+- how form fields and datasets are implemented,
+- and all architectural conventions described inside `.ia_context/`.
+
+If I later say “reindex context”, please re-read the `.ia_context/` folder to include any updated files.
+
+
+---------------------------------------------------------------------------------------------------------------------------
+
+
+Claude, please **reindex the project context**.
+
+Re-read all files under `.ia_context/` (including subfolders) and update your understanding of the Katana Studio architecture.
+
+You should reload:
+- `_OVERVIEW.md`
+- `_TECH_REFERENCE/**/*`
+- `_CONTEXT/**/*`
+- `manifest.json` and `manifest.schema.json`
+
+After reindexing, confirm that the context has been refreshed successfully and summarize only what has changed since the last load.

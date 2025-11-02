@@ -1,0 +1,15 @@
+{
+  "name": "ui-atoms",
+  "projectType": "library",
+  "sourceRoot": "libs/ui-atoms",
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/ui-atoms"],
+      "options": {
+        "jestConfig": "libs/ui-atoms/jest.config.ts",
+        "passWithNoTests": false
+      }
+    }
+  }
+}

@@ -1,3 +1,4 @@
+import * as React from 'react'
 import { render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import { IDEHeaderTitle } from './IDEHeaderTitle'
@@ -31,7 +32,9 @@ describe('IDEHeaderTitle', () => {
   })
 
   it('should apply custom className', () => {
-    const { container } = render(<IDEHeaderTitle className="custom-title-class">Title</IDEHeaderTitle>)
+    const { container } = render(
+      <IDEHeaderTitle className="custom-title-class">Title</IDEHeaderTitle>
+    )
 
     const titleBox = container.querySelector('.custom-title-class')
     expect(titleBox).toBeInTheDocument()

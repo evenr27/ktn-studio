@@ -1,0 +1,139 @@
+# Katana Studio — Directory Structure
+
+## Root Structure
+
+```
+ktn-studio/
+├── apps/                   ← Nx applications
+│   └── ktn-studio/         ← Main Next.js IDE app
+├── docker/                 ← Infrastructure (MongoDB, Postgres)
+│   ├── mongo/
+│   │   ├── backups/
+│   │   ├── init/
+│   │   ├── docker-compose.yml
+│   │   └── .env
+│   └── posgres/            ← (typo; rename to "postgres" later)
+├── libs/                   ← Shared libraries (layered architecture)
+├── .ia_context/            ← AI agent documentation (source of truth)
+├── tools/                  ← Scripts (print-tree.js, read-context.js)
+├── package.json            ← PNPM workspace root
+├── nx.json                 ← Nx configuration
+├── tsconfig.base.json      ← TypeScript base config
+└── README-IA.md            ← AI agent guide (created by this task)
+```
+
+---
+
+## Libraries (`libs/`)
+
+### Core Logic
+
+```
+libs/
+├── core/                   ← General base logic, types, ports
+│   ├── index.ts
+│   └── stores/
+├── core-form/              ← Base logic for form builder/player
+│   ├── schema/             ← Form schema types (form-schema.ts)
+│   ├── state/              ← Form state types (form-state.ts)
+│   ├── stores/             ← FormGitLikeStore
+│   └── utils/              ← schema-to-state converter
+└── ktn-store/              ← Git-like store infrastructure
+    ├── factories/          ← createKtnGitLikeStore.factory.ts
+    ├── adapters/           ← createKtnGitLikeHook.adapter.ts
+    ├── base-store/         ← BaseStore.ts
+    ├── git-like-store/     ← GitLikeStore.ts
+    └── persistence/        ← Persistence utilities
+```
+
+### Hooks (Ports)
+
+```
+libs/
+├── hooks/                  ← General stable provider hooks
+│   └── index.ts
+└── hooks-form/             ← Stable provider hooks for forms
+    └── index.ts
+```
+
+### UI Components
+
+```
+libs/
+├── theme/                  ← Project theme configuration
+│   └── theme.ts
+├── ui-atoms/               ← Primitive components (buttons, inputs)
+│   └── index.ts
+├── ui-molecules/           ← Composed components (multiple atoms)
+│   └── ide/
+│       └── header/
+│           ├── ide-header-logo/
+│           ├── ide-header-title/
+│           ├── ide-header-actions/
+│           └── ide-header-root/
+├── ui-cells/               ← Layout pieces (header, panels, sections)
+│   └── ide/
+│       └── ide-header/
+├── ui-controls-core/       ← Logical wrappers (state, validation, bindings)
+│   └── index.ts
+├── ui-controls-mui/        ← MUI-specific implementations of controls
+│   └── index.ts
+└── ui-features/            ← Complete features (IDE shell, dashboards)
+    └── ide-shell/
+```
+
+---
+
+## AI Context (`.ia_context/`)
+
+```
+.ia_context/
+├── _OVERVIEW.md                                ← Project vision (1-2 paragraphs)
+├── manifest.json                               ← Context manifest (structured metadata)
+├── manifest.schema.json                        ← JSON schema for manifest
+├── project-structure.txt                       ← Full directory tree (auto-generated)
+├── prompts.txt                                 ← Prompts for loading/reindexing context
+├── _CONTEXT/
+│   ├── directory.txt                           ← This file (high-level structure)
+│   ├── decisions.md                            ← Architectural decisions & conventions
+│   ├── env-setup.md                            ← Development environment setup
+│   └── roadmap.md                              ← Project phases & roadmap
+└── _TECH_REFERENCE/
+    ├── factories/
+    │   ├── CreateFormField.factory.txt         ← Intelligent form field wrapper
+    │   ├── createGitLikeHookAdapter.factory.txt
+    │   ├── createGitLikeHookSelector.factory.txt
+    │   └── createGitLikeZustandStore.factory.txt
+    └── architecture/
+        ├── git-like-pattern.md                 ← Stash/commit pattern explanation
+        ├── form-field-architecture.md          ← Intelligent form fields
+        └── hooks-system.md                     ← Hooks/adapters/selectors layering
+```
+
+---
+
+## Key Files by Purpose
+
+| Purpose                      | File(s)                                                                 |
+| ---------------------------- | ----------------------------------------------------------------------- |
+| **Project overview**         | `.ia_context/_OVERVIEW.md`                                              |
+| **Architectural rules**      | `.ia_context/_CONTEXT/decisions.md`                                     |
+| **Directory structure**      | `.ia_context/_CONTEXT/directory.txt` (this file)                        |
+| **Development setup**        | `.ia_context/_CONTEXT/env-setup.md`                                     |
+| **Roadmap**                  | `.ia_context/_CONTEXT/roadmap.md`                                       |
+| **Git-like pattern**         | `.ia_context/_TECH_REFERENCE/architecture/git-like-pattern.md`          |
+| **Form field architecture**  | `.ia_context/_TECH_REFERENCE/architecture/form-field-architecture.md`   |
+| **Hooks system**             | `.ia_context/_TECH_REFERENCE/architecture/hooks-system.md`              |
+| **Store factory**            | `.ia_context/_TECH_REFERENCE/factories/createGitLikeZustandStore.factory.txt` |
+| **Adapter factory**          | `.ia_context/_TECH_REFERENCE/factories/createGitLikeHookAdapter.factory.txt`  |
+| **Selector factory**         | `.ia_context/_TECH_REFERENCE/factories/createGitLikeHookSelector.factory.txt` |
+| **Form field factory**       | `.ia_context/_TECH_REFERENCE/factories/CreateFormField.factory.txt`     |
+| **AI agent guide (root)**    | `README-IA.md` (to be created)                                          |
+
+---
+
+## Notes
+
+- **Auto-generated files**: `project-structure.txt` is generated by `tools/print-tree.js`
+- **Source of truth**: All architectural patterns are documented in `.ia_context/`, NOT in code comments
+- **Naming conventions**: See `.ia_context/_CONTEXT/decisions.md` section 9 for file/directory naming rules
