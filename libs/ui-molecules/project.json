@@ -1,0 +1,15 @@
+{
+  "name": "ui-molecules",
+  "projectType": "library",
+  "sourceRoot": "libs/ui-molecules",
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/ui-molecules"],
+      "options": {
+        "jestConfig": "libs/ui-molecules/jest.config.ts",
+        "passWithNoTests": false
+      }
+    }
+  }
+}

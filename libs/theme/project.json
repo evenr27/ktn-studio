@@ -1,0 +1,15 @@
+{
+  "name": "theme",
+  "projectType": "library",
+  "sourceRoot": "libs/theme",
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/theme"],
+      "options": {
+        "jestConfig": "libs/theme/jest.config.ts",
+        "passWithNoTests": false
+      }
+    }
+  }
+}

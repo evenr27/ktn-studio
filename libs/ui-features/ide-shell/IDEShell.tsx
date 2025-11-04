@@ -1,12 +1,12 @@
-'use client';
+'use client'
 
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import { IDEHeader } from '@ktn/ui-cells';
+import * as React from 'react'
+import Box from '@mui/material/Box'
+import { IDEHeader } from '@ktn/ui-cells'
 
 export const IDEShell: React.FC = () => {
-  const leftPanelWidth = 260;
-  const rightPanelWidth = 340;
+  const leftPanelWidth = 260
+  const rightPanelWidth = 340
 
   return (
     <Box
@@ -126,7 +126,16 @@ export const IDEShell: React.FC = () => {
           >
             Components
           </Box>
-          <Box sx={{ flex: 1, overflow: 'auto', p: 1.5, display: 'flex', flexDirection: 'column', gap: 1 }}>
+          <Box
+            sx={{
+              flex: 1,
+              overflow: 'auto',
+              p: 1.5,
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 1,
+            }}
+          >
             {/* placeholder components */}
             <Box
               sx={{
@@ -233,7 +242,16 @@ export const IDEShell: React.FC = () => {
           >
             Properties
           </Box>
-          <Box sx={{ flex: 1, overflow: 'auto', p: 1.5, display: 'flex', flexDirection: 'column', gap: 1 }}>
+          <Box
+            sx={{
+              flex: 1,
+              overflow: 'auto',
+              p: 1.5,
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 1,
+            }}
+          >
             {/* placeholder */}
             <Box sx={{ fontSize: 12, color: 'rgba(148,163,184,0.9)' }}>
               Select a component to edit.
@@ -242,5 +260,5 @@ export const IDEShell: React.FC = () => {
         </Box>
       </Box>
     </Box>
-  );
-};
+  )
+}

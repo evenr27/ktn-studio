@@ -1,0 +1,15 @@
+{
+  "name": "ui-cells",
+  "projectType": "library",
+  "sourceRoot": "libs/ui-cells",
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/ui-cells"],
+      "options": {
+        "jestConfig": "libs/ui-cells/jest.config.ts",
+        "passWithNoTests": false
+      }
+    }
+  }
+}

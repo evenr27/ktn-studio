@@ -1,0 +1,70 @@
+{
+  "$schema": "./manifest.schema.json",
+  "project": "Katana Studio",
+  "version": "1.0.0",
+  "description": "Visual IDE and form builder with git-like state management, datasets, and AI integration.",
+  "structure": {
+    "_OVERVIEW.md": {
+      "type": "overview",
+      "description": "High-level project summary, architecture layers, and documentation map."
+    },
+    "_TECH_REFERENCE": {
+      "type": "technical",
+      "description": "Technical specifications, code factories, and architectural explanations.",
+      "children": {
+        "factories/CreateFormField.factory.txt": {
+          "type": "factory",
+          "description": "Factory for creating intelligent form fields with validation, debounce, and auto-commit."
+        },
+        "factories/createGitLikeHookAdapter.factory.txt": {
+          "type": "factory",
+          "description": "Factory to wrap Zustand stores into stable adapter hooks."
+        },
+        "factories/createGitLikeHookSelector.factory.txt": {
+          "type": "factory",
+          "description": "Factory for generating fine-grained Zustand selector hooks."
+        },
+        "factories/createGitLikeZustandStore.factory.txt": {
+          "type": "factory",
+          "description": "Factory that implements the core git-like store logic using Zustand."
+        },
+        "architecture/git-like-pattern.md": {
+          "type": "architecture",
+          "description": "Conceptual explanation of the stash/commit state pattern."
+        },
+        "architecture/form-field-architecture.md": {
+          "type": "architecture",
+          "description": "Documentation on the intelligent form field wrapper design."
+        },
+        "architecture/hooks-system.md": {
+          "type": "architecture",
+          "description": "Explanation of how adapter and selector hooks connect to stores and UI."
+        }
+      }
+    },
+    "_CONTEXT": {
+      "type": "context",
+      "description": "Operational and architectural context for developers and AI agents.",
+      "children": {
+        "directory.txt": {
+          "type": "reference",
+          "description": "Current directory structure of the Nx monorepo."
+        },
+        "env-setup.md": {
+          "type": "setup",
+          "description": "Instructions to set up the development environment and Docker services."
+        },
+        "roadmap.md": {
+          "type": "planning",
+          "description": "Roadmap of Katana Studio's development phases."
+        },
+        "decisions.md": {
+          "type": "adr",
+          "description": "Architectural decisions and rationales."
+        }
+      }
+    }
+  },
+  "tags": ["nx", "nextjs", "zustand", "git-like", "form-builder", "ai-agent", "mui", "mongodb"],
+  "last_updated": "2025-11-02T00:00:00Z"
+}

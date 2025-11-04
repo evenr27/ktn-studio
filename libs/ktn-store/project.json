@@ -1,0 +1,15 @@
+{
+  "name": "ktn-store",
+  "projectType": "library",
+  "sourceRoot": "libs/ktn-store",
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/ktn-store"],
+      "options": {
+        "jestConfig": "libs/ktn-store/jest.config.ts",
+        "passWithNoTests": false
+      }
+    }
+  }
+}

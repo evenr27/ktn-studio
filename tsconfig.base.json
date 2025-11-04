@@ -15,17 +15,20 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@ktn/core": ["libs/core/index.ts"],
+      "@ktn/core/*": ["libs/core/*"],
+
       "@ktn/core-form": ["libs/core-form/index.ts"],
       "@ktn/core-form/*": ["libs/core-form/*"],
 
-      "@ktn/core": ["libs/core/index.ts"],
-      "@ktn/core/*": ["libs/core/*"],
+      "@ktn/hooks": ["libs/hooks/index.ts"],
+      "@ktn/hooks/*": ["libs/hooks/*"],
 
       "@ktn/hooks-form": ["libs/hooks-form/index.ts"],
       "@ktn/hooks-form/*": ["libs/hooks-form/*"],
 
-      "@ktn/hooks": ["libs/hooks/index.ts"],
-      "@ktn/hooks/*": ["libs/hooks/*"],
+      "@ktn-store": ["libs/ktn-store/index.ts"],
+      "@ktn-store/*": ["libs/ktn-store/*"],
 
       "@ktn/theme": ["libs/theme/index.ts"],
       "@ktn/theme/*": ["libs/theme/*"],

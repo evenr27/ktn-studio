@@ -1,0 +1,202 @@
+/Users/edwinriveramondragon/DEV/ktn-studio
+├── .claude
+│   └── settings.local.json
+├── .gitignore
+├── .ia_context
+│   ├── _CONTEXT
+│   │   ├── decisions.md
+│   │   ├── directory.txt
+│   │   ├── env-setup.md
+│   │   └── roadmap.md
+│   ├── _OVERVIEW.md
+│   ├── _TECH_REFERENCE
+│   │   ├── architecture
+│   │   │   ├── form-field-architecture.md
+│   │   │   ├── git-like-pattern.md
+│   │   │   └── hooks-system.md
+│   │   └── factories
+│   │       ├── CreateFormField.factory.txt
+│   │       ├── createGitLikeHookAdapter.factory.txt
+│   │       ├── createGitLikeHookSelector.factory.txt
+│   │       └── createGitLikeZustandStore.factory.txt
+│   ├── manifest.json
+│   ├── manifest.schema.json
+│   ├── project-structure.txt
+│   └── prompts.txt
+├── .prettierignore
+├── .prettierrc
+├── apps
+│   └── ktn-studio
+│       ├── .swcrc
+│       ├── eslint.config.mjs
+│       ├── index.d.ts
+│       ├── jest.config.js
+│       ├── next-env.d.ts
+│       ├── next.config.js
+│       ├── package.json
+│       ├── public
+│       │   ├── .gitkeep
+│       │   └── favicon.ico
+│       ├── src
+│       │   ├── __tests__
+│       │   │   └── ide
+│       │   │       └── page.spec.tsx
+│       │   └── app
+│       │       ├── api
+│       │       │   └── hello
+│       │       │       └── route.ts
+│       │       ├── global.css
+│       │       ├── ide
+│       │       │   └── page.tsx
+│       │       ├── layout.tsx
+│       │       ├── page.module.css
+│       │       └── page.tsx
+│       ├── tsconfig.json
+│       ├── tsconfig.spec.json
+│       └── tsconfig.tsbuildinfo
+├── docker
+│   ├── mongo
+│   │   ├── .env
+│   │   ├── backups
+│   │   ├── docker-compose.yml
+│   │   └── init
+│   └── posgres
+├── error.log
+├── eslint.config.mjs
+├── jest.config.ts
+├── jest.preset.js
+├── libs
+│   ├── core
+│   │   ├── index.ts
+│   │   ├── jest.config.ts
+│   │   ├── project.json
+│   │   └── stores
+│   │       └── index.ts
+│   ├── core-form
+│   │   ├── index.ts
+│   │   ├── jest.config.ts
+│   │   ├── project.json
+│   │   ├── schema
+│   │   │   ├── form-schema
+│   │   │   │   ├── form-schema.ts
+│   │   │   │   └── index.ts
+│   │   │   └── index.ts
+│   │   ├── state
+│   │   │   ├── form-state
+│   │   │   │   ├── form-state.ts
+│   │   │   │   └── index.ts
+│   │   │   └── index.ts
+│   │   ├── stores
+│   │   │   ├── form-git-like-store
+│   │   │   │   ├── FormGitLikeStore.spec.ts
+│   │   │   │   ├── FormGitLikeStore.ts
+│   │   │   │   └── index.ts
+│   │   │   └── index.ts
+│   │   └── utils
+│   │       ├── index.ts
+│   │       └── schema-to-state
+│   │           ├── index.ts
+│   │           ├── schema-to-state.spec.ts
+│   │           └── schema-to-state.ts
+│   ├── hooks
+│   │   ├── index.ts
+│   │   ├── jest.config.ts
+│   │   └── project.json
+│   ├── hooks-form
+│   │   ├── index.ts
+│   │   ├── jest.config.ts
+│   │   └── project.json
+│   ├── ktn-store
+│   │   ├── adapters
+│   │   │   ├── createKtnGitLikeHook.adapter.spec.ts
+│   │   │   ├── createKtnGitLikeHook.adapter.ts
+│   │   │   └── index.ts
+│   │   ├── base-store
+│   │   │   ├── BaseStore.ts
+│   │   │   └── index.ts
+│   │   ├── factories
+│   │   │   ├── createKtnGitLikeStore.factory.spec.ts
+│   │   │   ├── createKtnGitLikeStore.factory.ts
+│   │   │   └── index.ts
+│   │   ├── git-like-store
+│   │   │   ├── GitLikeStore.ts
+│   │   │   └── index.ts
+│   │   ├── index.ts
+│   │   ├── jest.config.ts
+│   │   ├── persistence
+│   │   │   ├── index.ts
+│   │   │   └── persistence.ts
+│   │   ├── project.json
+│   │   └── README.md
+│   ├── theme
+│   │   ├── index.ts
+│   │   ├── jest.config.ts
+│   │   ├── project.json
+│   │   ├── theme.spec.ts
+│   │   └── theme.ts
+│   ├── ui-atoms
+│   │   ├── index.ts
+│   │   ├── jest.config.ts
+│   │   └── project.json
+│   ├── ui-cells
+│   │   ├── ide
+│   │   │   ├── ide-header
+│   │   │   │   ├── IDEHeader.spec.tsx
+│   │   │   │   ├── IDEHeader.tsx
+│   │   │   │   └── index.ts
+│   │   │   └── index.ts
+│   │   ├── index.ts
+│   │   ├── jest.config.ts
+│   │   └── project.json
+│   ├── ui-controls-core
+│   │   ├── index.ts
+│   │   ├── jest.config.ts
+│   │   └── project.json
+│   ├── ui-controls-mui
+│   │   ├── index.ts
+│   │   ├── jest.config.ts
+│   │   └── project.json
+│   ├── ui-features
+│   │   ├── ide-shell
+│   │   │   ├── IDEShell.spec.tsx
+│   │   │   ├── IDEShell.tsx
+│   │   │   └── index.ts
+│   │   ├── index.ts
+│   │   ├── jest.config.ts
+│   │   └── project.json
+│   └── ui-molecules
+│       ├── ide
+│       │   ├── header
+│       │   │   ├── ide-header-actions
+│       │   │   │   ├── IDEHeaderActions.spec.tsx
+│       │   │   │   ├── IDEHeaderActions.tsx
+│       │   │   │   └── index.ts
+│       │   │   ├── ide-header-logo
+│       │   │   │   ├── IDEHeaderLogo.spec.tsx
+│       │   │   │   ├── IDEHeaderLogo.tsx
+│       │   │   │   └── index.ts
+│       │   │   ├── ide-header-root
+│       │   │   │   ├── IDEHeaderRoot.spec.tsx
+│       │   │   │   ├── IDEHeaderRoot.tsx
+│       │   │   │   └── index.ts
+│       │   │   ├── ide-header-title
+│       │   │   │   ├── IDEHeaderTitle.spec.tsx
+│       │   │   │   ├── IDEHeaderTitle.tsx
+│       │   │   │   └── index.ts
+│       │   │   └── index.ts
+│       │   └── index.ts
+│       ├── index.ts
+│       ├── jest.config.ts
+│       └── project.json
+├── LICENSE
+├── NON-COMMERCIAL.md
+├── nx.json
+├── package.json
+├── pnpm-lock.yaml
+├── pnpm-workspace.yaml
+├── README.md
+├── tools
+│   ├── print-tree.js
+│   └── read-context.js
+├── tsconfig.base.json
+└── tsconfig.json

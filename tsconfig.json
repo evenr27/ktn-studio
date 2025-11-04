@@ -6,32 +6,5 @@
     {
       "path": "./apps/ktn-studio"
     },
-    {
-      "path": "./libs/theme"
-    },
-    {
-      "path": "./libs/ui-atoms"
-    },
-    {
-      "path": "./libs/ui-molecules"
-    },
-    {
-      "path": "./libs/ui-cells"
-    },
-    {
-      "path": "./libs/ui-features"
-    },
-    {
-      "path": "./libs/ui-controls-core"
-    },
-    {
-      "path": "./libs/ui-controls-mui"
-    },
-    {
-      "path": "./libs/core"
-    },
-    {
-      "path": "./libs/hooks"
-    }
   ]
 }

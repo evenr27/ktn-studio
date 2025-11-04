@@ -9,13 +9,7 @@ jest.mock('@ktn/ui-molecules', () => ({
     <div data-testid="header-root">{children}</div>
   ),
   IDEHeaderLogo: () => <div data-testid="header-logo">Logo</div>,
-  IDEHeaderTitle: ({
-    children,
-    subtitle,
-  }: {
-    children: React.ReactNode
-    subtitle?: string
-  }) => (
+  IDEHeaderTitle: ({ children, subtitle }: { children: React.ReactNode; subtitle?: string }) => (
     <div data-testid="header-title">
       <div>{children}</div>
       {subtitle && <div data-testid="subtitle">{subtitle}</div>}
