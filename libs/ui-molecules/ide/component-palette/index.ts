@@ -1,0 +1,5 @@
+export * from './ide-component-palette-root'
+export * from './ide-component-palette-header'
+export * from './ide-component-palette-body'
+export * from './ide-component-palette-category'
+export * from './ide-component-palette-item'

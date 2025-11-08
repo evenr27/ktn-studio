@@ -1,1 +1,5 @@
-export * from './ide-header'
+export * from './header'
+export * from './component-palette'
+export * from './layout'
+export * from './properties-panel'
+export * from './work-area'

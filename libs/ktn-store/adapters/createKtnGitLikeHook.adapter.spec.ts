@@ -6,8 +6,8 @@
  */
 
 import { renderHook, act } from '@testing-library/react'
-import { createKtnGitLikeHook } from './createKtnGitLikeHook.adapter'
-import { GitLikeStore, GitLikeState } from '../git-like-store'
+import { createKtnGitLikeHook, UseKtnStoreReturn } from './createKtnGitLikeHook.adapter'
+import { createKtnGitLikeStore } from '../factories'
 
 interface TestData {
   name: string
@@ -15,235 +15,312 @@ interface TestData {
 }
 
 describe('createKtnGitLikeHook', () => {
-  let store: GitLikeStore<TestData>
   const initialData: TestData = { name: 'test', count: 0 }
 
-  beforeEach(() => {
-    store = new GitLikeStore<TestData>(initialData)
-  })
-
   describe('initialization', () => {
-    it('should create a hook that returns full state when no selector is provided', () => {
+    it('should create a hook that returns all state and methods', () => {
+      const store = createKtnGitLikeStore({ initialData, persistence: 'none' })
       const useStore = createKtnGitLikeHook(store)
       const { result } = renderHook(() => useStore())
 
-      expect(result.current).toEqual<GitLikeState<TestData>>({
+      // Check that all properties exist
+      expect(result.current).toHaveProperty('stashData')
+      expect(result.current).toHaveProperty('commitData')
+      expect(result.current).toHaveProperty('state')
+      expect(result.current).toHaveProperty('stash')
+      expect(result.current).toHaveProperty('stashField')
+      expect(result.current).toHaveProperty('commit')
+      expect(result.current).toHaveProperty('discard')
+      expect(result.current).toHaveProperty('resetStash')
+      expect(result.current).toHaveProperty('resetAll')
+
+      // Check initial values
+      expect(result.current.stashData).toEqual(initialData)
+      expect(result.current.commitData).toEqual(initialData)
+      expect(result.current.state).toEqual({
         stashData: initialData,
         commitData: initialData,
       })
     })
 
-    it('should create a hook that returns selected state when selector is provided', () => {
+    it('should initialize with correct data types', () => {
+      const store = createKtnGitLikeStore({ initialData, persistence: 'none' })
       const useStore = createKtnGitLikeHook(store)
-      const { result } = renderHook(() => useStore((state) => state.stashData.name))
+      const { result } = renderHook(() => useStore())
 
-      expect(result.current).toBe('test')
+      expect(typeof result.current.stash).toBe('function')
+      expect(typeof result.current.stashField).toBe('function')
+      expect(typeof result.current.commit).toBe('function')
+      expect(typeof result.current.discard).toBe('function')
+      expect(typeof result.current.resetStash).toBe('function')
+      expect(typeof result.current.resetAll).toBe('function')
     })
   })
 
-  describe('state updates', () => {
-    it('should update when store state changes', () => {
+  describe('reactive state updates', () => {
+    it('should update stashData when stash method is called', () => {
+      const store = createKtnGitLikeStore({ initialData, persistence: 'none' })
       const useStore = createKtnGitLikeHook(store)
       const { result } = renderHook(() => useStore())
 
       act(() => {
-        store.stash({ name: 'updated', count: 1 })
+        result.current.stash({ name: 'updated', count: 1 })
       })
 
       expect(result.current.stashData).toEqual({ name: 'updated', count: 1 })
+      expect(result.current.commitData).toEqual(initialData) // Commit unchanged
     })
 
-    it('should update selected state when store changes', () => {
-      const useStore = createKtnGitLikeHook(store)
-      const { result } = renderHook(() => useStore((state) => state.stashData.count))
-
-      expect(result.current).toBe(0)
-
-      act(() => {
-        store.stashField('count', 5)
-      })
-
-      expect(result.current).toBe(5)
-    })
-
-    it('should update when commit is called', () => {
+    it('should update stashData when stashField method is called', () => {
+      const store = createKtnGitLikeStore({ initialData, persistence: 'none' })
       const useStore = createKtnGitLikeHook(store)
       const { result } = renderHook(() => useStore())
 
       act(() => {
-        store.stash({ name: 'committed', count: 10 })
-        store.commit()
+        result.current.stashField('count', 5)
+      })
+
+      expect(result.current.stashData.count).toBe(5)
+      expect(result.current.stashData.name).toBe('test') // Other field unchanged
+      expect(result.current.commitData).toEqual(initialData) // Commit unchanged
+    })
+
+    it('should update both stashData and commitData when commit is called', () => {
+      const store = createKtnGitLikeStore({ initialData, persistence: 'none' })
+      const useStore = createKtnGitLikeHook(store)
+      const { result } = renderHook(() => useStore())
+
+      act(() => {
+        result.current.stashField('name', 'committed')
+        result.current.stashField('count', 10)
+        result.current.commit()
       })
 
       expect(result.current.stashData).toEqual({ name: 'committed', count: 10 })
       expect(result.current.commitData).toEqual({ name: 'committed', count: 10 })
     })
 
-    it('should update when discard is called', () => {
+    it('should revert stashData to commitData when discard is called', () => {
+      const store = createKtnGitLikeStore({ initialData, persistence: 'none' })
       const useStore = createKtnGitLikeHook(store)
       const { result } = renderHook(() => useStore())
 
       act(() => {
-        store.stash({ name: 'changed', count: 5 })
+        result.current.stashField('name', 'changed')
+        result.current.stashField('count', 5)
       })
 
-      expect(result.current.stashData.name).toBe('changed')
+      expect(result.current.stashData).toEqual({ name: 'changed', count: 5 })
 
       act(() => {
-        store.discard()
+        result.current.discard()
       })
 
-      expect(result.current.stashData.name).toBe('test')
+      expect(result.current.stashData).toEqual(initialData)
+      expect(result.current.commitData).toEqual(initialData)
+    })
+
+    it('should update when store state changes externally', () => {
+      const store = createKtnGitLikeStore({ initialData, persistence: 'none' })
+      const useStore = createKtnGitLikeHook(store)
+      const { result } = renderHook(() => useStore())
+
+      // Change store directly (not through hook methods)
+      act(() => {
+        store.stash({ name: 'external', count: 99 })
+      })
+
+      expect(result.current.stashData).toEqual({ name: 'external', count: 99 })
     })
   })
 
-  describe('selector behavior', () => {
-    it('should only update when selected value changes', () => {
+  describe('stash method variations', () => {
+    it('should handle partial updates with stash', () => {
+      const store = createKtnGitLikeStore({ initialData, persistence: 'none' })
       const useStore = createKtnGitLikeHook(store)
-      let renderCount = 0
-      const selector = (state: GitLikeState<TestData>) => state.stashData.name
-
-      const { result } = renderHook(() => {
-        renderCount++
-        return useStore(selector)
-      })
-
-      const initialRenderCount = renderCount
+      const { result } = renderHook(() => useStore())
 
       act(() => {
-        store.stashField('count', 5)
+        result.current.stash({ count: 10 }) // Only update count
       })
 
-      // Should not re-render because name didn't change
-      expect(renderCount).toBe(initialRenderCount)
-      expect(result.current).toBe('test')
-
-      act(() => {
-        store.stashField('name', 'new-name')
-      })
-
-      // Should re-render because name changed
-      expect(renderCount).toBeGreaterThan(initialRenderCount)
-      expect(result.current).toBe('new-name')
+      expect(result.current.stashData).toEqual({ name: 'test', count: 10 })
     })
 
-    it('should work with complex selectors', () => {
+    it('should handle function updater with stash', () => {
+      const store = createKtnGitLikeStore({ initialData, persistence: 'none' })
       const useStore = createKtnGitLikeHook(store)
-      const { result } = renderHook(() =>
-        useStore((state) => ({
-          isModified: state.stashData.count !== state.commitData.count,
-          currentCount: state.stashData.count,
-        }))
-      )
-
-      expect(result.current.isModified).toBe(false)
-      expect(result.current.currentCount).toBe(0)
+      const { result } = renderHook(() => useStore())
 
       act(() => {
-        store.stashField('count', 10)
+        result.current.stash((prev) => ({ ...prev, count: prev.count + 1 }))
       })
 
-      expect(result.current.isModified).toBe(true)
-      expect(result.current.currentCount).toBe(10)
+      expect(result.current.stashData.count).toBe(1)
 
       act(() => {
-        store.commit()
+        result.current.stash((prev) => ({ ...prev, count: prev.count + 1 }))
       })
 
-      expect(result.current.isModified).toBe(false)
-      expect(result.current.currentCount).toBe(10)
+      expect(result.current.stashData.count).toBe(2)
+    })
+
+    it('should handle full replacement with stash', () => {
+      const store = createKtnGitLikeStore({ initialData, persistence: 'none' })
+      const useStore = createKtnGitLikeHook(store)
+      const { result } = renderHook(() => useStore())
+
+      act(() => {
+        result.current.stash({ name: 'replaced', count: 100 })
+      })
+
+      expect(result.current.stashData).toEqual({ name: 'replaced', count: 100 })
+    })
+  })
+
+  describe('resetStash and resetAll', () => {
+    it('should reset stashData to commitData with resetStash', () => {
+      const store = createKtnGitLikeStore({ initialData, persistence: 'none' })
+      const useStore = createKtnGitLikeHook(store)
+      const { result } = renderHook(() => useStore())
+
+      act(() => {
+        result.current.stashField('name', 'changed')
+        result.current.commit()
+        result.current.stashField('count', 99)
+      })
+
+      expect(result.current.stashData).toEqual({ name: 'changed', count: 99 })
+      expect(result.current.commitData).toEqual({ name: 'changed', count: 0 })
+
+      act(() => {
+        result.current.resetStash()
+      })
+
+      expect(result.current.stashData).toEqual({ name: 'changed', count: 0 })
+      expect(result.current.commitData).toEqual({ name: 'changed', count: 0 })
+    })
+
+    it('should reset both stash and commit to current commitData with resetAll', () => {
+      const store = createKtnGitLikeStore({ initialData, persistence: 'none' })
+      const useStore = createKtnGitLikeHook(store)
+      const { result } = renderHook(() => useStore())
+
+      act(() => {
+        result.current.stashField('name', 'v1')
+        result.current.commit()
+        result.current.stashField('count', 10)
+      })
+
+      const committedValue = result.current.commitData
+
+      act(() => {
+        result.current.resetAll()
+      })
+
+      expect(result.current.stashData).toEqual(committedValue)
+      expect(result.current.commitData).toEqual(committedValue)
     })
   })
 
   describe('subscription management', () => {
     it('should unsubscribe when component unmounts', () => {
+      const store = createKtnGitLikeStore({ initialData, persistence: 'none' })
       const useStore = createKtnGitLikeHook(store)
       const { unmount } = renderHook(() => useStore())
 
-      const listenersBefore = (store as any).listeners.size
+      const listenersBefore = (store._store as any).listeners.size
       unmount()
-      const listenersAfter = (store as any).listeners.size
+      const listenersAfter = (store._store as any).listeners.size
 
       expect(listenersAfter).toBeLessThan(listenersBefore)
     })
 
     it('should handle multiple hooks subscribing to the same store', () => {
+      const store = createKtnGitLikeStore({ initialData, persistence: 'none' })
       const useStore = createKtnGitLikeHook(store)
-      const { result: result1 } = renderHook(() => useStore((s) => s.stashData.name))
-      const { result: result2 } = renderHook(() => useStore((s) => s.stashData.count))
+      const { result: result1 } = renderHook(() => useStore())
+      const { result: result2 } = renderHook(() => useStore())
 
-      expect(result1.current).toBe('test')
-      expect(result2.current).toBe(0)
+      expect(result1.current.stashData.name).toBe('test')
+      expect(result2.current.stashData.count).toBe(0)
 
       act(() => {
-        store.stash({ name: 'updated', count: 5 })
+        result1.current.stash({ name: 'updated', count: 5 })
       })
 
-      expect(result1.current).toBe('updated')
-      expect(result2.current).toBe(5)
+      // Both hooks should update
+      expect(result1.current.stashData).toEqual({ name: 'updated', count: 5 })
+      expect(result2.current.stashData).toEqual({ name: 'updated', count: 5 })
     })
   })
 
   describe('edge cases', () => {
     it('should handle rapid state updates', () => {
+      const store = createKtnGitLikeStore({ initialData, persistence: 'none' })
       const useStore = createKtnGitLikeHook(store)
-      const { result } = renderHook(() => useStore((s) => s.stashData.count))
+      const { result } = renderHook(() => useStore())
 
       act(() => {
-        store.stashField('count', 1)
-        store.stashField('count', 2)
-        store.stashField('count', 3)
+        result.current.stashField('count', 1)
+        result.current.stashField('count', 2)
+        result.current.stashField('count', 3)
       })
 
-      expect(result.current).toBe(3)
+      expect(result.current.stashData.count).toBe(3)
     })
 
     it('should work with null or undefined values', () => {
-      const nullStore = new GitLikeStore<{ value: string | null }>({ value: null })
-      const useStore = createKtnGitLikeHook(nullStore)
-      const { result } = renderHook(() => useStore((s) => s.stashData.value))
+      const nullData = { value: null as string | null }
+      const store = createKtnGitLikeStore({ initialData: nullData, persistence: 'none' })
+      const useStore = createKtnGitLikeHook(store)
+      const { result } = renderHook(() => useStore())
 
-      expect(result.current).toBeNull()
+      expect(result.current.stashData.value).toBeNull()
 
       act(() => {
-        nullStore.stashField('value', 'not-null')
+        result.current.stashField('value', 'not-null')
       })
 
-      expect(result.current).toBe('not-null')
+      expect(result.current.stashData.value).toBe('not-null')
     })
 
     it('should handle store with array data', () => {
-      const arrayStore = new GitLikeStore<string[]>(['a', 'b', 'c'])
+      const arrayStore = createKtnGitLikeStore({
+        initialData: ['a', 'b', 'c'],
+        persistence: 'none',
+      })
       const useStore = createKtnGitLikeHook(arrayStore)
-      const { result } = renderHook(() => useStore((s) => s.stashData))
+      const { result } = renderHook(() => useStore())
 
-      expect(result.current).toEqual(['a', 'b', 'c'])
+      expect(result.current.stashData).toEqual(['a', 'b', 'c'])
 
       act(() => {
         // Use function updater for arrays to avoid merge behavior
-        arrayStore.stash(() => ['x', 'y', 'z'])
+        result.current.stash(() => ['x', 'y', 'z'])
       })
 
-      expect(result.current).toEqual(['x', 'y', 'z'])
+      expect(result.current.stashData).toEqual(['x', 'y', 'z'])
     })
 
     it('should handle store with primitive data', () => {
-      const primitiveStore = new GitLikeStore<number>(42)
+      const primitiveStore = createKtnGitLikeStore({ initialData: 42, persistence: 'none' })
       const useStore = createKtnGitLikeHook(primitiveStore)
-      const { result } = renderHook(() => useStore((s) => s.stashData))
+      const { result } = renderHook(() => useStore())
 
-      expect(result.current).toBe(42)
+      expect(result.current.stashData).toBe(42)
 
       act(() => {
-        primitiveStore.stash(100)
+        result.current.stash(100)
       })
 
-      expect(result.current).toBe(100)
+      expect(result.current.stashData).toBe(100)
     })
   })
 
-  describe('git-like workflow with hook', () => {
+  describe('complete git-like workflow', () => {
     it('should support complete git-like workflow through hook', () => {
+      const store = createKtnGitLikeStore({ initialData, persistence: 'none' })
       const useStore = createKtnGitLikeHook(store)
       const { result } = renderHook(() => useStore())
 
@@ -253,7 +330,7 @@ describe('createKtnGitLikeHook', () => {
 
       // Stash changes
       act(() => {
-        store.stash({ name: 'working', count: 5 })
+        result.current.stash({ name: 'working', count: 5 })
       })
 
       expect(result.current.stashData).toEqual({ name: 'working', count: 5 })
@@ -261,7 +338,7 @@ describe('createKtnGitLikeHook', () => {
 
       // Commit changes
       act(() => {
-        store.commit()
+        result.current.commit()
       })
 
       expect(result.current.stashData).toEqual({ name: 'working', count: 5 })
@@ -269,7 +346,7 @@ describe('createKtnGitLikeHook', () => {
 
       // Make new changes
       act(() => {
-        store.stashField('count', 10)
+        result.current.stashField('count', 10)
       })
 
       expect(result.current.stashData.count).toBe(10)
@@ -277,7 +354,7 @@ describe('createKtnGitLikeHook', () => {
 
       // Discard changes
       act(() => {
-        store.discard()
+        result.current.discard()
       })
 
       expect(result.current.stashData).toEqual({ name: 'working', count: 5 })
@@ -285,47 +362,74 @@ describe('createKtnGitLikeHook', () => {
     })
 
     it('should track modifications correctly through hook', () => {
+      const store = createKtnGitLikeStore({ initialData, persistence: 'none' })
       const useStore = createKtnGitLikeHook(store)
-      const { result } = renderHook(() =>
-        useStore((s) => ({
-          hasChanges: JSON.stringify(s.stashData) !== JSON.stringify(s.commitData),
-          stash: s.stashData,
-          commit: s.commitData,
-        }))
-      )
+      const { result } = renderHook(() => useStore())
 
-      expect(result.current.hasChanges).toBe(false)
+      const hasChanges = () =>
+        JSON.stringify(result.current.stashData) !== JSON.stringify(result.current.commitData)
+
+      expect(hasChanges()).toBe(false)
 
       act(() => {
-        store.stashField('name', 'modified')
+        result.current.stashField('name', 'modified')
       })
 
-      expect(result.current.hasChanges).toBe(true)
+      expect(hasChanges()).toBe(true)
 
       act(() => {
-        store.commit()
+        result.current.commit()
       })
 
-      expect(result.current.hasChanges).toBe(false)
+      expect(hasChanges()).toBe(false)
     })
   })
 
   describe('type safety', () => {
     it('should maintain type safety with TypeScript', () => {
+      const store = createKtnGitLikeStore({ initialData, persistence: 'none' })
       const useStore = createKtnGitLikeHook(store)
 
       // This test is more about compilation than runtime
-      const { result } = renderHook(() =>
-        useStore((state) => {
-          // These should all be type-safe
-          const name: string = state.stashData.name
-          const count: number = state.stashData.count
-          return { name, count }
-        })
-      )
+      const { result } = renderHook(() => useStore())
 
-      expect(result.current.name).toBe('test')
-      expect(result.current.count).toBe(0)
+      // These should all be type-safe
+      const name: string = result.current.stashData.name
+      const count: number = result.current.stashData.count
+
+      expect(name).toBe('test')
+      expect(count).toBe(0)
+    })
+
+    it('should properly type the UseKtnStoreReturn interface', () => {
+      const store = createKtnGitLikeStore({ initialData, persistence: 'none' })
+      const useStore = createKtnGitLikeHook(store)
+      const { result } = renderHook(() => useStore())
+
+      // Type assertion to ensure the return type is correct
+      const hookReturn: UseKtnStoreReturn<TestData> = result.current
+
+      expect(hookReturn.stashData).toBeDefined()
+      expect(hookReturn.commitData).toBeDefined()
+      expect(hookReturn.state).toBeDefined()
+    })
+  })
+
+  describe('state object consistency', () => {
+    it('should keep state object in sync with stashData and commitData', () => {
+      const store = createKtnGitLikeStore({ initialData, persistence: 'none' })
+      const useStore = createKtnGitLikeHook(store)
+      const { result } = renderHook(() => useStore())
+
+      expect(result.current.state.stashData).toBe(result.current.stashData)
+      expect(result.current.state.commitData).toBe(result.current.commitData)
+
+      act(() => {
+        result.current.stashField('name', 'changed')
+      })
+
+      expect(result.current.state.stashData).toBe(result.current.stashData)
+      expect(result.current.state.commitData).toBe(result.current.commitData)
     })
   })
 })

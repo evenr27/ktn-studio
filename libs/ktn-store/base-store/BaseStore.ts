@@ -4,7 +4,20 @@ export type StoreListener<T> = (state: T, prevState: T) => void
 type Selector<T, S> = (state: T) => S
 type EqualityFn<S> = (a: S, b: S) => boolean
 
-export class BaseStore<T = unknown> {
+/**
+ * Abstract base class for all stores in ktn-store.
+ *
+ * Provides core functionality for state management, subscriptions, and selectors.
+ * Concrete implementations must extend this class.
+ *
+ * @example
+ * ```typescript
+ * class MyStore extends BaseStore<MyState> {
+ *   // Implementation
+ * }
+ * ```
+ */
+export abstract class BaseStore<T = unknown> {
   protected state: T
   private listeners: Set<StoreListener<T>> = new Set()
   private selectorListeners: Array<{
@@ -17,10 +30,18 @@ export class BaseStore<T = unknown> {
     this.state = initialState
   }
 
+  /**
+   * Get the current state.
+   * Can be overridden by subclasses for custom behavior.
+   */
   getState(): T {
     return this.state
   }
 
+  /**
+   * Update the state.
+   * Notifies all subscribers after state change.
+   */
   setState(updater: Partial<T> | ((prev: T) => T) | T): void {
     const prev = this.state
     let next: T

@@ -10,7 +10,29 @@ export interface CreateKtnGitLikeStoreConfig<T = unknown> {
   onChange?: (state: GitLikeState<T>) => void
 }
 
-export function createKtnGitLikeStore<T = unknown>(config: CreateKtnGitLikeStoreConfig<T>) {
+export interface KtnGitLikeStoreInstance<T = unknown> {
+  getState: () => GitLikeState<T>
+  getStash: () => T
+  getCommit: () => T
+  stash: (patch: Partial<T> | ((prev: T) => T) | T) => void
+  stashField: <K extends keyof T>(key: K, value: T[K]) => void
+  commit: () => void
+  discard: () => void
+  resetStash: () => void
+  resetAll: () => void
+  hydrate: (stash: T, commit?: T) => void
+  subscribe: (listener: (state: GitLikeState<T>) => void) => () => void
+  subscribeSelector: <S>(
+    selector: (state: GitLikeState<T>) => S,
+    cb: (slice: S, prevSlice: S) => void,
+    equalityFn?: (a: S, b: S) => boolean
+  ) => () => void
+  _store: GitLikeStore<T>
+}
+
+export function createKtnGitLikeStore<T = unknown>(
+  config: CreateKtnGitLikeStoreConfig<T>
+): KtnGitLikeStoreInstance<T> {
   const { storageKey, initialData, onChange, persistence = 'none' } = config
 
   const store = new GitLikeStore<T>(initialData)

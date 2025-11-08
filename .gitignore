@@ -51,8 +51,9 @@ out
 
 test-output
 
-#IA CONTEXT
-.context
-
 # Snyk Security Extension - AI Rules (auto-generated)
 .github/instructions/snyk_rules.instructions.md
+
+.ia_context
+.ia_context/*
+README-IA.md

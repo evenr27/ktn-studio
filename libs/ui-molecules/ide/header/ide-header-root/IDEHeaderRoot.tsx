@@ -20,8 +20,8 @@ export const IDEHeaderRoot: React.FC<IDEHeaderRootProps> = ({
       position="static"
       elevation={elevation}
       sx={{
-        backgroundColor: 'rgba(2,6,23,1)', // slate-950
-        borderBottom: '1px solid rgba(15,23,42,0.6)',
+        backgroundColor: '#004C97',
+        borderBottom: '1px solid #004C97',
         minHeight: 48,
       }}
       className={className}
